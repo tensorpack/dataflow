@@ -3,7 +3,7 @@
 Tensorpack Dataflow is an **efficient** and **flexible** data
 loading pipeline for deep learning, written in pure Python.
 
-It's main features are:
+Its main features are:
 
 1. **Highly-optimized for speed**.
 	 Parallization in Python is hard.
@@ -19,6 +19,13 @@ and has been through 3 years of active development.
 Given its independence of the rest of the tensorpack library, and
 the high demand from users, it is now a separate library.
 
+## Install:
+```
+pip install --upgrade git+https://github.com/tensorpack/dataflow.git
+# or add `--user` to install to user's local directories
+```
+Many features also requires OpenCV as a dependency.
+
 ## Examples:
 ```python
 import dataflow as D
@@ -28,7 +35,7 @@ d = D.MultiProcessMapData(d, nr_proc=10, lambda img, label: other_transform(img,
 d = D.BatchData(d, 64)
 d.reset_state()
 for img, label in d:
-	# ...
+  # ...
 ```
 
 ## Documentation:
