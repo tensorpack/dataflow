@@ -34,7 +34,7 @@ You may also need to install opencv, which is used by many builtin DataFlows.
 import dataflow as D
 d = D.ILSVRC12('/path/to/imagenet')  # produce [img, label]
 d = D.MapDataComponent(d, lambda img: some_transform(img), 0)
-d = D.MultiProcessMapData(d, nr_proc=10, lambda img, label: other_transform(img, label))
+d = D.MultiProcessMapData(d, num_proc=10, lambda img, label: other_transform(img, label))
 d = D.BatchData(d, 64)
 d.reset_state()
 for img, label in d:
