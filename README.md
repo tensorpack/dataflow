@@ -51,3 +51,8 @@ for img, label in d:
 ### APIs:
 1. [Built-in DataFlows](https://tensorpack.readthedocs.io/modules/dataflow.html)
 1. [Built-in Datasets](https://tensorpack.readthedocs.io/modules/dataflow.dataset.html)
+
+## Support & Contributing
+
+Please send issues and pull requests (for the `dataflow/` directory) to the
+[tensorpack project](https://github.com/tensorpack/tensorpack/) where the source code is developed.
