@@ -47,7 +47,8 @@ if __name__ == '__main__':
 
     tp_repo = git.Repo(tp_root)
     assert tp_repo.active_branch.name == 'master'
-    assert not tp_repo.is_dirty()
+    if tp_repo.is_dirty():
+        print("Warning: tensorpack repo is not clean!")
 
     df_repo = git.Repo(DF_ROOT)
     assert not df_repo.is_dirty()
@@ -68,29 +69,31 @@ if __name__ == '__main__':
 
     unsynced_commits = unsynced_commits[::-1]
 
-    for commit_to_sync in unsynced_commits:
-        tp_repo.git.checkout(commit_to_sync.hexsha)
-        logger.info("-" * 60)
-        logger.info("Syncing commit '{}' at {}".format(
-            commit_to_sync.message.strip(), show_date(commit_to_sync.authored_date)))
+    try:
+        for commit_to_sync in unsynced_commits:
+            tp_repo.git.checkout(commit_to_sync.hexsha)
+            logger.info("-" * 60)
+            logger.info("Syncing commit '{}' at {}".format(
+                commit_to_sync.message.strip(), show_date(commit_to_sync.authored_date)))
 
-        # sync files
-        dst = os.path.join(DF_ROOT, 'dataflow', 'dataflow')
-        logger.info("Syncing {} ...".format(dst))
-        shutil.rmtree(dst)
-        shutil.copytree(os.path.join(tp_root, 'tensorpack', 'dataflow'), dst)
+            # sync files
+            dst = os.path.join(DF_ROOT, 'dataflow', 'dataflow')
+            logger.info("Syncing {} ...".format(dst))
+            shutil.rmtree(dst)
+            shutil.copytree(os.path.join(tp_root, 'tensorpack', 'dataflow'), dst)
 
-        logger.info("Syncing utils ...")
-        for util in UTILS_TO_SYNC:
-            dst = os.path.join(DF_ROOT, 'dataflow', 'utils', util + '.py')
-            src = os.path.join(tp_root, 'tensorpack', 'utils', util + '.py')
-            os.unlink(dst)
-            shutil.copy2(src, dst)
+            logger.info("Syncing utils ...")
+            for util in UTILS_TO_SYNC:
+                dst = os.path.join(DF_ROOT, 'dataflow', 'utils', util + '.py')
+                src = os.path.join(tp_root, 'tensorpack', 'utils', util + '.py')
+                os.unlink(dst)
+                shutil.copy2(src, dst)
 
-        log = df_repo.git.commit(
-            '--all',
-            message=commit_to_sync.message,
-            date=commit_to_sync.authored_date,
-            author=commit_to_sync.author)
-        logger.info("Successfully sync commit:\n" + log)
-    tp_repo.git.checkout('master')
+            log = df_repo.git.commit(
+                '--all',
+                message=commit_to_sync.message,
+                date=commit_to_sync.authored_date,
+                author=commit_to_sync.author)
+            logger.info("Successfully sync commit:\n" + log)
+    finally:
+        tp_repo.git.checkout('master')
