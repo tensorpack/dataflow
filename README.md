@@ -6,7 +6,7 @@ loading pipeline for deep learning, written in pure Python.
 Its main features are:
 
 1. **Highly-optimized for speed**.
-	 Parallization in Python is hard and most libraries do it wrong.
+	 Parallelization in Python is hard and most libraries do it wrong.
 	 DataFlow implements highly-optimized
 	 parallel building blocks which gives you an easy interface to parallelize your workload.
 
