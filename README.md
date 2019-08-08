@@ -6,7 +6,7 @@ loading pipeline for deep learning, written in pure Python.
 Its main features are:
 
 1. **Highly-optimized for speed**.
-	 Parallization in Python is hard.
+	 Parallization in Python is hard and most libraries do it wrong.
 	 DataFlow implements highly-optimized
 	 parallel building blocks which gives you an easy interface to parallelize your workload.
 
@@ -33,7 +33,7 @@ You may also need to install opencv, which is used by many builtin DataFlows.
 ```python
 import dataflow as D
 d = D.ILSVRC12('/path/to/imagenet')  # produce [img, label]
-d = D.MapDataComponent(d, lambda img: some_transform(img), 0)
+d = D.MapDataComponent(d, lambda img: some_transform(img), index=0)
 d = D.MultiProcessMapData(d, num_proc=10, lambda img, label: other_transform(img, label))
 d = D.BatchData(d, 64)
 d.reset_state()
@@ -46,6 +46,7 @@ for img, label in d:
 1. [Basics](https://tensorpack.readthedocs.io/tutorial/dataflow.html)
 1. [Why DataFlow?](https://tensorpack.readthedocs.io/tutorial/philosophy/dataflow.html)
 1. [Write a DataFlow](https://tensorpack.readthedocs.io/tutorial/extend/dataflow.html)
+1. [Parallel DataFlow](https://tensorpack.readthedocs.io/tutorial/parallel-dataflow.html)
 1. [Efficient DataFlow](https://tensorpack.readthedocs.io/tutorial/efficient-dataflow.html)
 
 ### APIs:
