@@ -57,7 +57,8 @@ if __name__ == '__main__':
     logger.info("DataFlow commit to match: \n" + show_commit(df_latest_commit))
 
     unsynced_commits = []
-    for cmt in tp_repo.iter_commits(paths=['tensorpack/dataflow', 'tensorpack/utils']):
+    paths_to_sync = ['tensorpack/dataflow'] + ['tensorpack/utils/{}.py'.format(u) for u in UTILS_TO_SYNC]
+    for cmt in tp_repo.iter_commits(paths=paths_to_sync):
         if match_commit(cmt, df_latest_commit):
             logger.info("Matched tensorpack commit: \n" + show_commit(cmt))
             break
@@ -89,11 +90,12 @@ if __name__ == '__main__':
                 os.unlink(dst)
                 shutil.copy2(src, dst)
 
+            author = "\"{} <{}>\"".format(commit_to_sync.author.name, commit_to_sync.author.email)
             log = df_repo.git.commit(
                 '--all',
-                message=commit_to_sync.message,
+                message='"{}"'.format(commit_to_sync.message.strip()),
                 date=commit_to_sync.authored_date,
-                author=commit_to_sync.author)
+                author=author)
             logger.info("Successfully sync commit:\n" + log)
     finally:
         tp_repo.git.checkout('master')
