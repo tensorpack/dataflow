@@ -46,7 +46,7 @@ setup(
     ],
     tests_require=['flake8'],
     extras_require={
-        'all': ['pillow', 'scipy', 'h5py', 'lmdb>=0.92', 'matplotlib', 'scikit-learn'],
+        'all': ['scipy', 'h5py', 'lmdb>=0.92', 'matplotlib', 'scikit-learn'],
         'all: "linux" in sys_platform': ['python-prctl'],
     },
 
