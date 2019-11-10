@@ -25,7 +25,9 @@ UTILS_TO_SYNC = [
 
 
 def match_commit(tp_commit, df_commit):
-    if (tp_commit.message == df_commit.message) and \
+    df_commit_message = df_commit.message.strip().strip('"').strip()
+    tp_commit_message = tp_commit.message.strip()
+    if (tp_commit_message == df_commit_message) and \
             (tp_commit.authored_date == df_commit.authored_date):
         return True
     return False
@@ -93,7 +95,7 @@ if __name__ == '__main__':
             author = "\"{} <{}>\"".format(commit_to_sync.author.name, commit_to_sync.author.email)
             log = df_repo.git.commit(
                 '--all',
-                message='"{}"'.format(commit_to_sync.message.strip()),
+                message='{}'.format(commit_to_sync.message.strip()),
                 date=commit_to_sync.authored_date,
                 author=author)
             logger.info("Successfully sync commit:\n" + log)
