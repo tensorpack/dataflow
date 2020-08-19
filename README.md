@@ -14,9 +14,10 @@ Its main features are:
 	 This allows it to be used together with any other Python-based library.
 
 DataFlow is originally part of the [tensorpack library](https://github.com/tensorpack/tensorpack/)
-and has been through 3 years of active development.
-Given its independence of the rest of the tensorpack library, and
-the high demand from users, it is now a separate library whose source code is synced with tensorpack.
+and has been through many years of polishing.
+Given its independence of the rest of the tensorpack library,
+it is now a separate library whose source code is synced with tensorpack.
+Please use [tensorpack issues](https://github.com/tensorpack/tensorpack/issues/) for support.
 
 Why would you want to use DataFlow instead of a platform-specific data loading solutions?
 We recommend you to read
